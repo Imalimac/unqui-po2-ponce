@@ -1,0 +1,137 @@
+@startuml
+Persona <-- Empleado
+Empleado <-- EmpleadoContratado
+Empleado <-- EmpleadoPermanente
+Empleado <-- EmpleadoTemporal
+
+Empresa "1" -- "*" Empleado : tiene
+Empresa "1" -- "*" Recibo : genera
+
+class Persona {
+	- String nombre
+	- String direccion
+	- String estadoCivil
+	- LocalDate fechaDeNacimiento
+
+	+ Persona ()
+	+ Persona(String nombre, String direccion, String estadoCivil, String fechaDeNacimiento)
+	+ getNombre(): String
+	+ setNombre(String nombre): void
+	+ getDireccion():String
+	+ setDireccion(String direccion):void
+	+ getEstadoCivil(): String
+	+ setEstadoCivil(String estadoCivil):void
+	+ getFechaDeNacimiento():LocalDate
+	+ setFechaDeNacimiento(LocalDate fechaDeNacimiento):void
+	+ edad() int
+}
+
+abstract Empleado{
+	private float sueldoBasico;	
+
+	+ Empleado(String nombre, String direccion, String estadoCivil, String fechaDeNacimiento, float sueldoBasico)
+	+ desgloceDeConceptos(): String
+	+ getSueldoBasico(): float
+	+ <sueldoBruto>(): float 
+	+ <obraSocial>(): float 
+	+ <aportesJubilatorios>(): float 
+	+ retenciones(): float
+	+ sueldoNeto(): float 
+}
+
+class EmpleadoContratado extends Empleado {
+	- numeroDeContrato: int
+	- medioDePago: String
+	
+	+ EmpleadoContratado(String nombre, String direccion, String estadoCivil, String fechaDeNacimiento,float sueldoBasico, int numeroDeContrato, String medioDePago)
+	+ getMedioDePago(): String
+	+ setMedioDePago(String medioDePago): void
+	+ getNumeroDeContrato(): int
+	+ sueldoBruto(): float
+	+ obraSocial(): float 
+	+ aportesJubilatorios(): float
+	+ retenciones(): float
+		
+}
+
+class EmpleadoPermanente {
+	- cantidadDeHijos: int
+	- fechaDeIngreso: LocalDate
+
+	+ EmpleadoPermanente(String nombre, String direccion, String estadoCivil, String fechaDeNacimiento,float sueldoBasico, int cantidadDeHijos, String fechaDeIngreso) 
+	+ getCantidadDeHijos(): int
+	+ setCantidadDeHijos(int cantidadDeHijos): void
+	+ getFechaDeIngreso(): LocalDate 
+	+ antiguedad(): int 
+	
+	+ asignacionPorConyuge(): int
+	+ asignacionPorHijo(): float
+	+ asignacionPorAntiguedad(): float
+	+ desgloceDeConceptos(): String
+	+ sueldoBruto(): float
+	+ obraSocial(): float 
+	+ aportesJubilatorios(): float	
+}
+
+class EmpleadoTemporal {
+	- fechaDeFinDeDesignacion: final LocalDate
+	- horasExtra: float
+	- añosDeAportes: int
+	
+	+ EmpleadoTemporal(String nombre, String direccion, String estadoCivil, String fechaDeNacimiento, float sueldoBasico, String fechaDeFinDeDesignacion, int añosDeAportes)
+	+ getAñosDeAportes(): int
+	+ setAñosDeAportes(int añosDeAportes): void
+	+ getHorasExtra(): float
+	+ setHorasExtra(float horasExtra): void
+	+ getFechaDeFinDeDesignacion(): LocalDate
+	+ desgloceDeConceptos(): String
+	+ sueldoBruto(): float
+	+ obraSocial(): float
+	+ aportesJubilatorios(): float 
+	+ extraPorAñosDeAportes(): float 
+	
+}
+
+class Empresa {
+	- nombre: String
+	- cuit: int
+	- empleados: ArrayList <Empleado>
+	- recibosDeHaberes: ArrayList <Recibo>
+		
+	+ Empresa()
+	+ Empresa(String nombre, int cuit, ArrayList<Empleado> empleados, ArrayList<Recibo> recibosDeHaberes) {
+	+ getNombre(): String 
+	+ setNombre(String nombre): void 
+	+ getCuit(): int 
+	+ setCuit(int cuit): void
+	+ getEmpleados(): ArrayList<Empleado>
+	+ setEmpleados(ArrayList<Empleado> empleados): void
+	+ getRecibosDeHaberes(): ArrayList<Recibo> 
+	+ setRecibosDeHaberes(ArrayList<Recibo> recibosDeHaberes): void 
+	+ contratar(Empleado empleado): void
+	+ despedir(Empleado empleado): void
+	+ liquidarSueldos(): void 
+	+ montoTotalNeto(): float
+    	+ montoTotalBruto(): float 
+    	+ montoTotalRetenciones(): float 
+}
+
+class Recibo {
+	- empleado: Empleado
+	- nombreEmpleado: String 
+	- direccion: String 
+	- fechaDeEmision: LocalDate
+	- sueldoBruto: float
+	- sueldoNeto: float
+	- desgloceDeConceptos: String
+	
+	+ Recibo(Empleado empleado) 
+	+ getEmpleado(): Empleado
+	+ getNombreEmpleado(): String
+	+ getDireccion(): String 
+	+ getFechaDeEmision(): LocalDate
+	+ getSueldoBruto(): float
+	+ getSueldoNeto() :float 
+	+ getDesgloceDeConceptos(): String
+}
+@enduml

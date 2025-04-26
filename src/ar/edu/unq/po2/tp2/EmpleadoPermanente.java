@@ -7,12 +7,6 @@ public class EmpleadoPermanente extends Empleado {
 	private int cantidadDeHijos;
 	private final LocalDate fechaDeIngreso;
 
-	/*
-	 * private float asignacionPorHijo = cantidadDeHijos * 150; private float
-	 * asignacionPorConyuge; private float asignacionPorAntiguedad =
-	 * this.antiguedad() * 50
-	 */
-
 	public EmpleadoPermanente(String nombre, String direccion, String estadoCivil, String fechaDeNacimiento,
 			float sueldoBasico, int cantidadDeHijos, String fechaDeIngreso) {
 		super(nombre, direccion, estadoCivil, fechaDeNacimiento, sueldoBasico);
@@ -43,7 +37,7 @@ public class EmpleadoPermanente extends Empleado {
 	}
 
 	public int asignacionPorConyuge() {
-		if (this.getEstadoCivil() == ("casado") | this.getEstadoCivil() == ("concubino")) {
+		if (this.getEstadoCivil() == ("casado") || this.getEstadoCivil() == ("concubino")) {
 			return 100;
 		} else
 			return 0;
