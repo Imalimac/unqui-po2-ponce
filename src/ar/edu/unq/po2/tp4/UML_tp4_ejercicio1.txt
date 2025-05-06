@@ -1,0 +1,58 @@
+@startuml
+
+Supermercado --> Producto
+Producto <|-- ProductoPrimeraNecesidad
+
+
+class Supermercado {
+	+ nombre: String 
+	+ direccion: String
+	+ listaDeProductos: ArrayList <Producto>
+	
+	+ Supermercado(nombre, direccion)
+	+ getNombre(): String 
+	+ setNombre(String nombre): void
+	+ getDireccion(): String
+	+ setDireccion(String direccion): void
+	+ getListaDeProductos(): ArrayList<Producto> 
+	+ setListaDeProductos(listaDeProductos): void
+	+ agregarProducto(productoAAgregar): void
+	+ getCantidadDeProductos(): Integer
+	+ getPrecioTotal(): double
+}
+
+class Producto {
+	+ nombre: String
+    	+ precio: double 
+    	+ esPrecioCuidado: boolean
+
+   	+ Producto(nombre, precio, esPrecioCuidado)
+   	+ Producto(nombre, precio) 
+	+ getNombre():String
+	+ setNombre(nombre): void 
+	+ getPrecio(): double
+   	+ setPrecio(precio): void 
+    	+ esPrecioCuidado(): boolean
+	+ setEsPrecioCuidado(esPrecioCuidado): void
+	+ aumentarPrecio(incrementoDePrecio): void 
+}
+
+class ProductoPrimeraNecesidad {
+	+ nombre: String
+    	+ precio: double 
+    	+ esPrecioCuidado: boolean	
+	- double descuento = 0.9;
+	
+  	+ ProductoPrimeraNecesidad(nombre, precio, esPrecioCuidado)
+	+ ProductoPrimeraNecesidad(nombre, precio, esPrecioCuidado, descuento)
+	+ getNombre():String
+	+ setNombre(nombre): void 
+	+ getPrecio(): double
+   	+ setPrecio(precio): void 
+    	+ esPrecioCuidado(): boolean
+	+ setEsPrecioCuidado(esPrecioCuidado): void
+	+ aumentarPrecio(incrementoDePrecio): void 
+	+ double getDescuento(): double 
+	+ setDescuento(double descuento): void 
+}
+@enduml

@@ -1,0 +1,52 @@
+@startuml
+
+Trabajador --> Ingreso
+Ingreso <|-- IngresoPorHorasExtras
+
+
+class Trabajador {
+	+ nombre: String 
+	+ ingresosAnuales: ArrayList<Ingreso>
+	
+	+ Trabajador(ingresosAnuales, nombre)
+	+ Trabajador(nombre)
+	+ agregarIngreso(ingresoAAgregar): void
+	+ getTotalPercibido():double
+	+ getMontoImponible(): double
+	+ getImpuestoAPagar(): double
+}
+
+class Ingreso {
+	+ mesDePercepcion: String
+    	+ concepto: String 
+    	+ montoPercibido: double
+
+   	+ Ingreso(mesDePercepcion, concepto, montoPercibido)
+	+ getMesDePercepcion():String
+	+ setMesDePercepcion(nombre): void 
+	+ getConcepto():String
+	+ setConcepto(nombre): void 
+	+ getMontoPercibido(): double
+   	+ setMontoPercibido(precio): void 
+	+ getMontoImponible(): double
+   
+}
+
+class IngresoPorHorasExtras {
+	+ mesDePercepcion: String
+    	+ concepto: String 
+    	+ montoPercibido: double
+	+ cantidadDeHorasExtras: Integer
+
+   	+ IngresoPorHorasExtras(mesDePercepcion, concepto, montoPercibido, cantidadDeHorasExtras)
+	+ getMesDePercepcion():String
+	+ setMesDePercepcion(nombre): void 
+	+ getConcepto():String
+	+ setConcepto(nombre): void 
+	+ getMontoPercibido(): double
+   	+ setMontoPercibido(precio): void 
+	+ getMontoImponible(): double
+	+ getCantidadDeHorasExtras(): Integer
+   	+ setCantidadDeHorasExtras(precio): void 
+}
+@enduml
