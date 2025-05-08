@@ -1,0 +1,4 @@
+Banco "1" --> "many" Cliente
+Credito <|-- CreditoPersonal
+Credito <|-- CreditoHipotecario
+Banco "1" <|-- "many" Solicitud
