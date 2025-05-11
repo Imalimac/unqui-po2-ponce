@@ -1,0 +1,16 @@
+MaquinaDeVideoJuegos --* EstadoDeMaquina
+
+EstadoDeMaquina <|-- EstadoApagado
+EstadoDeMaquina <|-- EstadoEncendido
+EstadoDeMaquina <|-- EstadoEncendidoConUnaFicha
+EstadoDeMaquina <|-- EstadoEncendidoConDosFichas
+
+
+Class MaquinaDeVideoJuegos {
+	- estado:EstadoDeMaquina
+}
+
+
+Class EstadoDeMaquina {
+	- estado:EstadoDeMaquina.
+}
