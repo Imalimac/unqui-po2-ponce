@@ -1,0 +1,110 @@
+@startuml
+interface RegistrarProducto
+interface Agencia
+
+interface RegistrarProducto {
++ montoTotal: double.
+	
++ sumarMontoProducto(Producto productoASumar): void. 
++ decrementarStock(ArrayList<Producto> listaDeProductos, Producto productoARestar): void.
++ registrarProducto(ArrayList<Producto> listaDeProductos, Producto productoARestar): void.
+
+}
+
+interface Agencia {
++ registrarPago (Factura factura): void. 
+
+}
+
+class AgenciaRecaudadora {
++ facturasPagas: ArrayList<Factura>.	
+
++ notificarPagoDeFactura(Factura facturaPaga): void.
++ getFacturasPagas(): ArrayList<Factura>.
+
+}
+
+class Caja {
+
++ montoTotal: double.
++ listaDeProductos: ArrayList<Producto>.
++ agencia: AgenciaRecaudadora.
+
++ sumarMontoProducto(Producto productoASumar): void.
++ decrementarStock(ArrayList<Producto> listaDeProductos, Producto productoARestar): void.
++ registrarProducto(ArrayList<Producto> listaDeProductos, Producto productoARestar): void.
++ agregarProducto(Producto producto): void.
++ getListaDeProductos(): ArrayList<Producto>.
++ getMontoTotal(): double. 
++ informarMontoACliente(): String.
++ registrarPago (Factura factura): void.
++ getAgencia(): AgenciaRecaudadora.
++ setAgencia(AgenciaRecaudadora agencia): void.
+
+}
+
+abstract class Factura {
+- String periodo;
+	
++ Factura(String periodo).
++ periodoFacturado(): String. 
++ factura(): String. 
+abstract  montoAPagar(): double.
+
+}
+
+class FacturaImpuestos {
+- tasaDeServicio: double. 
+
++ FacturaImpuestos(String periodo, double tasaDeServicio).
++ montoAPagar(): double. 
+
+}
+
+class FacturaServicios {
+- costoPorUnidad: double.
+- cantidadDeunidadesConsumidas: double.
+
++ FacturaServicios(String periodo, double costoPorUnidad, double cantidadDeunidadesConsumidas) {
++ montoAPagar(): double.
+
+}
+
+abstract class Producto {
++ precio: double.
+
++ Producto(double precio)
++ precio(): double.
+abstract descuento(): double.
+
+}
+
+class ProductoCooperativa {
++ ProductoCooperativa(double precio).
++ descuento(): double.
+
+}
+
+class ProductoTradicional {
++ ProductoTradicional(double precio).
++ descuento(): double.
+
+}
+
+
+
+Caja ..|> RegistrarProducto
+Caja ..|> Agencia
+
+Caja --> Producto
+Caja --> Factura
+Caja --> AgenciaRecaudadora
+
+Producto <|-- ProductoCooperativa
+Producto <|-- ProductoTradicional
+
+Factura <|-- FacturaImpuestos
+Factura <|-- FacturaServicios
+
+
+@enduml

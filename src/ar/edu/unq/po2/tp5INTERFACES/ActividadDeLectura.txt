@@ -1,0 +1,42 @@
+1. ¿Qué ventajas, en cuanto a polimorfismo, brindan las interfaces en java?
+	a. Flexibilidad para implementar múltiples comportamientos: una clase puede implementar múltiples interfaces, lo que permite que un objeto adopte diferentes comportamientos o roles. Esto no es posible con la herencia de clases.
+	b. Promueve el uso de tipos abstractos: Las interfaces permiten que el código sea más genérico y desacoplado, ya que puedes programar contra una interfaz en lugar de una implementación específica. Diferentes clases pueden 				implementar la misma interfaz y ser tratadas de manera uniforme. Ejemplo: la interfaz Animal con un método hacerSonido(), puede tener las clases Perro y Gato. Esto permite trabajar con una lista de Animal sin tener que 		distinguir el tipo específico de cada objeto.
+	c. Facilita la extensibilidad del código: permite agregar nuevas implementaciones sin modificar el código existente. Esto permite que el sistema sea escalable.
+	d. Soporte para polimorfismo dinámico: permite decidir en tiempo de ejecución qué implementación de un método se debe invocar. Ejemplo: Si tienes una referencia de tipo Animal, pero el objeto real es un Perro, al llamar a 				hacerSonido(), se ejecutará la implementación específica de Perro.
+	e. Compatibilidad con patrones de diseño: permiten implementar muchos patrones de diseño que dependen del polimorfismo para funcionar correctamente.
+	
+En resumen, las interfaces permiten diseñar sistemas más flexibles, modulares y fáciles de mantener.
+
+2. ¿Por qué no siempre puedo utilizar clases abstractas para agrupar clases polimórifcas?
+Las clases abstractas no siempre son la solución adecuada para agrupar clases polimórficas debido a ciertas limitaciones inherentes a su diseño y uso. Sus limitaciones son las siguientes:
+	
+	- No se pueden instanciar: Las clases abstractas no pueden ser instanciadas directamente lo que limita su uso en escenarios donde se requiere una instancia concreta. 
+	- Tienen métodos abstractos: estos requieren implementación en las subclases. Si una subclase omite la implementación, también debe ser declarada como abstracta. Esto puede hacer que la jerarquía de clases sea más 				complicada y menos flexible.
+	- Limitaciones en Herencia: Una clase solo puede heredar de una clase abstracta, lo que significa que no puedes implementar herencia múltiple. 
+
+En base a esto las Interfaces son preferibles cuando necesitamos que diferentes clases implementen su funcionalidad de manera uniforme sin forzarlas a heredar de una clase base común. Esto es útil cuando las clases no 			están relacionadas y no comparten un comportamiento común en un sentido jerárquico. Tambien se usan para evitar la Duplicación de Código: al usar interfaces, varias clases pueden implementar el mismo conjunto de métodos, 		lo que facilita la reutilización del código y disminuye la complejidad estructural.
+
+3. ¿Qué ventajas tiene las clases abstractas sobre las interfaces?
+Las clases abstractas ofrecen ventajas en la reutilización de código y encapsulación, permitiendo una jerarquía de herencia más coherente en comparación con las interfaces, que se centran en la flexibilidad y la implementación múltiple.
+	1. Reutilización de Código: Las clases abstractas permiten a las clases hijas heredar atributos y métodos concretos, lo que promueve la reutilización del código. Esto es útil cuando se tiene un comportamiento común que se puede 		compartir entre varias clases derivadas, facilitando la gestión y reducción de duplicación de código. 
+	2. Encapsulación y Diseño de Jerarquías: Las clases abstractas proporcionan un marco estructural que obliga a las clases derivadas a implementar métodos abstractos, garantizando una implementación coherente de la funcionalidad
+	3. Métodos Abstractos y Concretos: A diferencia de las interfaces, las clases abstractas pueden contener tanto métodos abstractos (sin implementación) como métodos concretos (con implementación). Esto permite que las clases 		abstractas proporcionen implementaciones predeterminadas para ciertos métodos mientras obligan a las subclases a definir sus propias versiones de otros, lo que añade flexibilidad al diseño sin sacrificar la estructura.
+	4. Herencia Única vs. Múltiple: Las clases solo pueden heredar de una clase abstracta, mientras que pueden implementar múltiples interfaces. Esto puede ser una ventaja cuando se quiere definir un comportamiento común sin 		complicaciones derivadas de una herencia múltiple.
+	5. Uso en Polimorfismo: Las clases abstractas al definir métodos que las clases derivadas deben implementar, se garantiza que los objetos de diferentes clases que heredan de una misma clase abstracta puedan ser tratados de manera 		uniforme en el código.
+
+4. ¿Se puede instanciar una interface?
+No, una interfaz es un contrato que define un conjunto de métodos que las clases pueden implementar, permitiendo la interacción entre objetos no relacionados y promoviendo la reutilización del código. Es un tipo de dato abstracto que describe un conjunto de métodos (sin implementar) que las clases deben proporcionar. Define un contrato que las clases que implementan la interfaz deben cumplir. 
+
+5. ¿Por qué no es recomendable incrementar o modificar las firmas definidas de una interface?
+Modificar o incrementar las firmas definidas de una interfaz puede traer varias complicaciones, especialmente en sistemas grandes o con múltiples dependencias. 
+	- Rompe la compatibilidad: Si otros módulos o componentes ya dependen de una interfaz específica, cambiar sus firmas puede provocar errores en todas esas dependencias, haciendo que el sistema falle o que haya que modificar múltiples partes del código.
+	- Dificulta el mantenimiento: Al modificar una interfaz, todos los implementadores de la misma deben adaptarse a los cambios. Esto genera un trabajo adicional y puede aumentar el riesgo de errores en la integración.
+	- Invalida el principio de "contrato": Las interfaces en programación actúan como un contrato entre distintas partes del código. Alterarlas significa que los consumidores de la interfaz ya no pueden confiar en el comportamiento original, afectando la estabilidad y predictibilidad del sistema.
+	- Impacta en la extensibilidad: En lugar de modificar una interfaz existente, es preferible extenderla o crear una nueva que se adapte mejor a los nuevos requisitos sin afectar las implementaciones previas.
+
+
+6. ¿Por qué, en lenguajes como smaltalk, no es necesaria la implementación de interfaces?
+Smalltalk es un lenguaje de programación orientado a objetos puro y dinámico, lo que influye directamente en la manera en que maneja la estructura de los objetos y la comunicación entre ellos. No requiere la implementación explícita de interfaces porque:
+	- Es de Tipado dinámico: En Smalltalk, los objetos se comunican enviándose mensajes. No es necesario definir una interfaz porque cualquier objeto que responda correctamente a un mensaje puede ser utilizado sin importar su clase. 	- Tiene Flexibilidad y polimorfismo implícito: A diferencia de lenguajes como Java, donde las interfaces actúan como contratos explícitos, en Smalltalk el polimorfismo es implícito. Esto significa que cualquier objeto que 		implemente los métodos necesarios se puede usar en la misma capacidad que cualquier otro, sin la necesidad de declarar formalmente una interfaz.
+	- Tiene Menos restricciones y más extensibilidad: Al no estar obligado a definir interfaces explícitas, el código se vuelve más flexible y fácil de extender. Los desarrolladores pueden modificar objetos en tiempo de ejecución sin 		preocuparse por estructuras rígidas predefinidas.
+	- Tiene un Sistema basado en metaclases: Esto permite que los objetos tengan comportamientos dinámicos sin depender de interfaces fijas.
