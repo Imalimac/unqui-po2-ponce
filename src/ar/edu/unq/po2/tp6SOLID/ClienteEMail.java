@@ -19,6 +19,33 @@ public class ClienteEMail {
 		this.conectar();
 	}
 	
+	
+	// Se crea para poder conectar las cuentas de mail.
+	public ServidorPop getServidor() {
+		return servidor;
+	}
+
+	public String getNombreUsuario() {
+		return nombreUsuario;
+	}
+
+	public String getPassusuario() {
+		return passusuario;
+	}
+
+	public ArrayList<Correo> getInbox() {
+		return inbox;
+	}
+
+	
+	public void setInbox(ArrayList<Correo> inbox) {
+		this.inbox = inbox;
+	}
+
+	public ArrayList<Correo> getBorrados() {
+		return borrados;
+	}
+
 	public void conectar(){
 		this.servidor.conectar(this.nombreUsuario,this.passusuario);
 	}
@@ -41,7 +68,7 @@ public class ClienteEMail {
 	}
 	
 	public void recibirNuevos(){
-		this.servidor.recibirNuevos(this.nombreUsuario, this.passusuario);
+		inbox = this.servidor.recibirNuevos(this.nombreUsuario, this.passusuario);
 	}
 	
 	public void enviarCorreo(String asunto, String destinatario, String cuerpo){

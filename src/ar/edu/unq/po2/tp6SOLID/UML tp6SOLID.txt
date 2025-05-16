@@ -2,12 +2,14 @@
 Banco --  Cliente
 Banco --  Credito
 Banco ..|> SolicitarCredito
+ServidorPop ..|> IServidor
 
 Credito <|-- CreditoHipotecario
 Credito <|-- CreditoPersonal
 
 Cliente -- PropiedadInmobiliaria
-
+Cliente --  ClienteEMail
+ServidorPop -- Correo
 
 
 
@@ -24,6 +26,68 @@ Cliente -- PropiedadInmobiliaria
 + getSueldoNetoMensual(): double.
 
 }
+
+class ClienteEMail {
+	
++ ServidorPop servidor;
++ nombreUsuario: String. 
++ passusuario: String.
++ inbox: ArrayList<Correo>.
+- borrados: ArrayList<Correo>.
+	
++ ClienteEMail(ServidorPop servidor, String nombreUsuario, String pass)
++ getServidor(): ServidorPop.  
++ getNombreUsuario(): String.
++ getPassusuario(): String.
++ getInbox(): ArrayList<Correo>.
++ setInbox(ArrayList<Correo> inbox): void.
++ getBorrados(): ArrayList<Correo>.
++ conectar(): void.
++ borrarCorreo(Correo correo): void.
++ contarBorrados(): int. 
++ contarInbox(): int.
++ eliminarBorrado(Correo correo): void.
++ recibirNuevos(): void.
++ enviarCorreo(String asunto, String destinatario, String cuerpo): void.
+
+}
+
+interface IServidor {
++ recibirNuevos(String user, String pass): ArrayList<Correo>.
++ conectar(String nombreUsuario, String passusuario): void.
++ enviar(Correo correo: void.
++ tazaDeTransferencia(): float. 
++ resetear(): void.
++ realizarBackUp(): void.
+
+}
+
+class ServidorPop {
++ listaClienteDeMail: ArrayList<ClienteEMail>().
+- clienteConectado: ClienteEMail. 
+	
+- ServidorPop() {
++ getListaClienteDeMail(): ArrayList<ClienteEMail>.
++ agregarClienteDeMail(ClienteEMail clienteAAgregar): void.
++ recibirNuevos(String user, String pass): ArrayList <Correo>. 
++ conectar(String nombreUsuario, String passusuario): void.
++ enviar(Correo correo): void.
++ tazaDeTransferencia(): float.
++ resetear(): void.
++ realizarBackUp(): void.
+
+}
+
+class Correo {
++ asunto: String.
++ destinatario: String.
++ cuerpo: String.
+	
++ Correo(String asunto, String destinatario, String cuerpo).
++ getDestinatario(): String.
+	
+}
+
 
 Class Banco {
 	- capitalDelBanco: double.

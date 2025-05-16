@@ -4,14 +4,16 @@ import java.util.ArrayList;
 
 public class Banco implements SolicitarCredito {
     private double capitalDelBanco;
+    private ClienteEMail emailBanco;
 	private ArrayList <Cliente> listaDeClientes = new ArrayList<Cliente>();
     private ArrayList <Credito> listaDeCreditosOtorgados = new ArrayList<Credito>();
     private ArrayList <Credito> listaDeSolicitudesDeCreditos = new ArrayList<Credito>();
     
         
-    public Banco(double capitalDelBanco) {
+    public Banco(double capitalDelBanco, ClienteEMail emailBanco) {
 		super();
 		this.capitalDelBanco = capitalDelBanco;
+		this.emailBanco = emailBanco;
 	}
   
 	public double getCapitalDelBanco() {
@@ -60,6 +62,25 @@ public class Banco implements SolicitarCredito {
 		
 	}
 	
+	public double montoTotalDeCreditosADesembolsar(ArrayList<Credito> listaDeSolicitudesPendientes) {
+		double montoTotalADesembolsar = 0;
+				
+		for (Credito credito:listaDeSolicitudesPendientes) {
+			if (credito.esAceptable()) {
+				montoTotalADesembolsar = montoTotalADesembolsar + credito.getMontoSolicitado();
+			}
+		}
+		
+		return montoTotalADesembolsar;
+	}
+	
+	public void acreditarDineroDeCredito(Credito creditoAOtorgar) {
+		if (this.getCapitalDelBanco()>= creditoAOtorgar.getMontoSolicitado()) {
+			this.setCapitalDelBanco(this.getCapitalDelBanco() - creditoAOtorgar.getMontoSolicitado());
+			creditoAOtorgar.getCliente().setSaldoCuenta(creditoAOtorgar.getCliente().getSaldoCuenta()+ creditoAOtorgar.getMontoSolicitado());
+		}
+	}
+	
     public void evaluarSolicitudDeCredito(Credito creditoSolicitado) {
     	if (creditoSolicitado.esAceptable()) {
     		this.otorgarCredito(creditoSolicitado);
@@ -74,17 +95,30 @@ public class Banco implements SolicitarCredito {
     	this.agregarCliente(creditoOtorgado.getCliente());
     	this.agregarCreditoOtorgado(creditoOtorgado);
     	this.listaDeSolicitudesDeCreditos.remove(creditoOtorgado);
-    	this.setCapitalDelBanco(this.getCapitalDelBanco() - creditoOtorgado.getMontoSolicitado());
-    	creditoOtorgado.getCliente().setSaldoCuenta(creditoOtorgado.getCliente().getSaldoCuenta()+ creditoOtorgado.getMontoSolicitado());
+    	this.acreditarDineroDeCredito(creditoOtorgado);
+	
     }
     
     public void denegarCredito(Credito creditoDenegado) {
     	this.listaDeSolicitudesDeCreditos.remove(creditoDenegado);
-    	this.informarAlClienteCreditoDenegado();
+    	this.enviarEMailAlClienteDeCreditoDenegado(creditoDenegado);
     }
     
-    public String informarAlClienteCreditoDenegado() {
-    	return "No cumple con los requisitos necesarios. Crédito denegado.";
+	public Correo correoDeCreditoDenegado(String destinatario) {	
+		return 	new Correo(this.asuntoMailDenegacionDeCredito(), destinatario, this.cuerpoMailDenegacionDeCredito());
+			
+	}
+	
+	public String asuntoMailDenegacionDeCredito() {
+		return "Denegacion De Credito";
+	}
+
+	public String cuerpoMailDenegacionDeCredito() {
+		return "Su crédito ha sido Denegado.";
+	}
+
+    public void enviarEMailAlClienteDeCreditoDenegado(Credito creditoDenegado) {
+    	emailBanco.enviarCorreo(this.asuntoMailDenegacionDeCredito(), creditoDenegado.getCliente().getEmail().getNombreUsuario(), this.cuerpoMailDenegacionDeCredito());
     }
     
     

@@ -13,18 +13,25 @@ class CreditosTestCase {
 	private CreditoHipotecario creditoHipotecarioMaria;
 	private CreditoPersonal creditoPersonalJose;
 	private CreditoPersonal creditoPersonalMaria;
+	private ClienteEMail emailJose;
+	private ClienteEMail emailMaria;
+	private ServidorPop gmail;
 
 	
 	@BeforeEach
 	public void setUp() {
+		gmail  = new ServidorPop();
+		emailJose =  new ClienteEMail(gmail, "jose", "pass123");
+		emailMaria =  new ClienteEMail(gmail, "maria", "pass456");
 		propiedadJose = new PropiedadInmobiliaria("Solis 33", "PH 2 ambientes", 8000);
 		propiedadMaria = new PropiedadInmobiliaria("Moreno 33", "Departamento 3 ambientes", 28000);
-		jose = new Cliente("Jose Perez", 64, 1000, 500, 6000);
-		maria = new Cliente("Maria Lopez", 40, 3000, 2500, 60000);
+		jose = new Cliente("Jose Perez", 64, 1000, 500, 6000, emailJose);
+		maria = new Cliente("Maria Lopez", 40, 3000, 2500, 60000, emailMaria);
 		creditoHipotecarioJose = new CreditoHipotecario(jose, 6000, 24, propiedadJose);
 		creditoHipotecarioMaria = new CreditoHipotecario(maria,24000, 24, propiedadMaria);
 		creditoPersonalJose = new CreditoPersonal(jose, 480, 24);
 		creditoPersonalMaria = new CreditoPersonal(maria, 21210, 12);
+		
 
 	}
 	

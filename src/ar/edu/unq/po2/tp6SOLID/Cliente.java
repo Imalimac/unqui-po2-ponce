@@ -6,14 +6,16 @@ public class Cliente {
     private double saldoCuenta;
     private double sueldoNetoMensual;
     private double sueldoNetoAnual;
+    private ClienteEMail email;
     
-    public Cliente(String nombre, Integer edad, double saldoCuenta, double sueldoNetoMensual, double sueldoNetoAnual) {
+    public Cliente(String nombre, Integer edad, double saldoCuenta, double sueldoNetoMensual, double sueldoNetoAnual, ClienteEMail email) {
 		super();
 		this.nombre = nombre;
 		this.edad = edad;
 		this.saldoCuenta = saldoCuenta;
 		this.sueldoNetoMensual = sueldoNetoMensual;
 		this.sueldoNetoAnual = sueldoNetoAnual;
+		this.email = email;
 	}
 
 	public void solicitarCredito(Banco bancoAcreedor, Credito creditoASolicitar){
@@ -43,6 +45,45 @@ public class Cliente {
 	public void setSaldoCuenta(double saldoCuenta) {
 		this.saldoCuenta = saldoCuenta;
 	}
-    
-    
+	
+	// Gestionar Email
+	
+	public void conectarMail() {
+		email.conectar();
+	}
+	
+	public void borrarMail(Correo correo){
+		email.borrarCorreo(correo);
+	}
+	
+	public int contarMailBorrado(Correo correo){
+		return email.contarBorrados();
+	}
+	
+	public int contarInboxMail(Correo correo){
+		return email.contarInbox();
+	}
+	
+	public void eliminarCorreoBorrado(Correo correo){
+		email.eliminarBorrado(correo);
+	}
+	
+	public void recibirNuevos(){
+		email.recibirNuevos();
+	}
+	
+	public void enviarMail(String asunto, String destinatario, String cuerpo) {
+		email.enviarCorreo(asunto, destinatario, cuerpo);
+	}
+
+	public ClienteEMail getEmail() {
+		return email;
+	}
+
+	public void setEmail(ClienteEMail email) {
+		this.email = email;
+	}
+	
+	
+  
 }
