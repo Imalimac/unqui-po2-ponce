@@ -1,0 +1,102 @@
+@startuml
+Banco --  Cliente
+Banco --  Credito
+Banco ..|> SolicitarCredito
+
+Credito <|-- CreditoHipotecario
+Credito <|-- CreditoPersonal
+
+Cliente -- PropiedadInmobiliaria
+
+
+
+
+ Class Cliente {
+- nombre: String. 
+- edad: Integer.
+- sueldoNetoMensual: double.
+- sueldoNetoAnual: double.
+
++ void solicitarCredito(Banco bancoAcreedor, Credito creditoASolicitar, Integer montoDelCredito).
++ getNombre(): String. 
++ getEdad(): Integer.
++ getSueldoNetoAnual(): double.
++ getSueldoNetoMensual(): double.
+
+}
+
+Class Banco {
+	- capitalDelBanco: double.
+    - listaDeClientes: ArrayList<Cliente>().
+    - listaDeCreditosOtorgados: ArrayList<Credito>().
+    - listaDeSolicitudesDeCreditos: ArrayList<Credito>().
+ 
+    + Banco(double capitalDelBanco).
+    + getCapitalDelBanco(): double.
+    + setCapitalDelBanco(double capitalDelBanco): void.
+    + agregarCliente(Cliente cliente): void.
+    + getListaDeClientes(): ArrayList<Cliente>.
+ 	+ agregarCreditoOtorgado(Credito credito): void.
+ 	+ getListaDeCreditosOtorgados():  ArrayList<Credito>.
+ 	+ registrarSolicitudDeCredito(Credito creditoASolicitar): void.
+ 	+ getListaDeSolicitudesDeCreditos(): ArrayList<Credito>.
+ 	+ evaluarTodasLasSolicitudesPendientes(ArrayList<Credito> listaDeSolicitudesPendientes): void.
+ 	+ evaluarSolicitudDeCredito(Credito creditoSolicitado): void.
+ 	+ otorgarCredito(Credito creditoOtorgado): void.
+ 	+ denegarCredito(Credito creditoDenegado): void.
+ 	+ informarAlClienteCreditoDenegado(): String.
+}
+
+Interface SolicitarCredito {
+    + registrarSolicitudDeCredito(Credito creditoASolicitar): void. 
+    + evaluarSolicitudDeCredito(Credito creditoASolicitar): void.
+    + otorgarCredito(Credito creditoAOtorgar): void.
+    + denegarCredito(Credito creditoADenegar): void.
+}
+
+Abstract Class Credito {
+    + Cliente cliente;
+    + double montoSolicitado;
+    + Integer plazoEnMeses;
+
+    + Credito(Cliente cliente, double montoSolicitado, Integer plazoEnMeses)
+    + getCliente(): Cliente.
+    + setCliente(Cliente): void.
+    + getMontoSolicitado(): double.
+    + setMontoSOlicitado(double montoSolicitado): void.
+    + getPlazoEnMeses(): Integer.
+    +setPlazoEnMeses(Integer PlazoEnMeses): void.
+    + montoCuotaMensual(): double.
+    abstract esAceptable(): boolean.
+    abstract montoTopeDeCuota(): double.
+}
+
+Class CreditoPersonal {
+        
+    + CreditoPersonal(Cliente cliente, double montoSolicitado, Integer plazoEnMeses)
+    + esAceptable(): boolean.
+    + montoTopeDeCuota(): double.
+}
+
+Class CreditoHipotecario{
+    + propiedadInmobiliaria: PropiedadInmobiliaria.
+    
+    + CreditoHipotecario(Cliente cliente, double montoSolicitado, Integer plazoEnMeses,PropiedadInmobiliaria PropiedadInmobiliaria )
+    + esAceptable(): boolean.
+    + noSuperaTopeDeValorFiscalDeGarantia(): boolean.
+    + montoTopeDeCuota(): double.
+    + clienteNoSuperaEdadTope(): boolean.
+    + plazoDeCreditoEnAños(): Integer.
+}
+
+Class PropiedadInmobiliaria{
+    + direccion: String.
+    + descripcionDeLaPropiedad: String.
+    + valorFiscalDelInmueble: double.
+
+    + PropiedadInmobiliaria(String direccion, String descripcionDeLaPropiedad, double valorFiscarDelInmueble)
+    + getValorFiscalDelInmueble(): double.
+    + getDireccion(): String.
+    + getDescripcionDeLaPropiedad(): String.
+}
+@enduml
