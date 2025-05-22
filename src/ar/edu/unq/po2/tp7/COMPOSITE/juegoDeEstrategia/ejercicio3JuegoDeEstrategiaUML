@@ -1,0 +1,68 @@
+@startuml
+
+Personaje ..|> IAccionDelPersonaje
+
+Ejercito "1" *-- "*" Ejercito
+Ejercito "1" *-- "*" Personaje 
+Personaje "1" *-- "1" Ubicacion
+
+Personaje <|-- Ingeniero
+Personaje <|-- Caballero
+Personaje <|-- Ejercito
+
+interface IAccionDelPersonaje{
+	+ caminar(Ubicacion destino): void.
+}
+
+abstract class Personaje {
+- ubicacionDelPersonaje: Ubicacion 
+
++ Personaje(Ubicacion ubicacionDeLPersonaje)
++ getUbicacionDeLPersonaje(): Ubicacion 
++ setUbicacionDeLPersonaje(Ubicacion ubicacionDeLPersonaje): void
++ darUnPasoHacia(Ubicacion destino): void
+}
+
+class Ingeniero {
+- Integer cantidadDeLajas;
+
++ Ingeniero(Ubicacion ubicacionDeLPersonaje, Integer cantidadDeLajas)
++ getCantidadDeLajas(): Integer  
++ agregarLajas(Integer cantidadDeLajas): void 
++ caminar(Ubicacion destino): void 
+
+}
+
+class Caballero {
+
++ Caballero(Ubicacion ubicacionDeLPersonaje)
++ caminar(Ubicacion destino): void 
++ moverseEnDiagonalDerecha(): void
++ moverseEnDiagonalIzquierda(): void		
+}
+
+class Ejercito {
+- soldados: ArrayList<Personaje> 
+	
++ Ejercito(Ubicacion ubicacionDeLPersonaje)
++ getSoldados(): ArrayList<Personaje> 
++ agregarSoldado(Personaje soldadoAAgregar): void
++ agregarEjercito(Ejercito ejercitoAAgregar): void
++ caminar(Ubicacion ubicacion): void
+
+}
+
+class Ubicacion {
+- latitud: double.
+- longitud: double.
+- tieneLaja: boolean. 
+     
++ Ubicacion(double latitud, double longitud) {
++ getLatitud(): double.
++ getLongitud(): double.
++ distanciaEntreDosUbicaciones(Ubicacion primerUbicacion, Ubicacion segundaUbicacion): double.
++ tieneLaja(): boolean.
++ ponerLaja(): void. 
+
+}
+@enduml

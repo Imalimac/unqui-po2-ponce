@@ -1,0 +1,23 @@
+
+Ejercicio 1 - Desde el libro
+
+
+Basándose en el capítulo del patrón de diseño del libro Design Patterns de Gamma et al. desarrolle los siguientes puntos.
+1. En la intención del patrón se indica que el cliente debe poder tratar de manera uniforme tanto a objetos individuales como compuestos. ¿Cómo se logra esto con el patrón Composite?
+
+	El patrón Composite consigue que el cliente trate de manera uniforme a objetos individuales y compuestos (nodos internos) definiendo una interfaz común (Component) que ambos tipos implementan. Esto significa que, sin importar si se está operando sobre un objeto simple o sobre uno que contenga otros objetos, el cliente puede invocar los mismos métodos. 
+Por ejemplo, la interfaz "Component" define un método "operation()". Los objetos individuales implementan operation() realizándolo directamente sobre sus propios datos, mientras que los compuestos implementan ese mismo método delegando la llamada a cada uno de sus hijos (que a su vez pueden ser individuales o compuestos). De este modo, el cliente puede invocar operation() en cualquier objeto de tipo Component sin preocuparse de si está trabajando con un objeto individual o con una estructura compuesta. Este diseño basado en la composición y el uso del polimorfismo es la clave que permite la uniformidad en el tratamiento de estructuras complejas. No se necesita que el cliente realice ningún tipo de comprobación o distinción entre el objeto simple y el compuesto, ya que ambos responden a la misma interfaz contractual. Esto simplifica la implementación del cliente y promueve un código flexible y extensible, tal como lo sugieren Gamma et al. en Design Patterns.
+
+2. Explique en qué casos aplicaría el patrón.
+
+	El patrón es especialmente útil cuando necesitas modelar estructuras jerárquicas en las que tanto los objetos individuales como los compuestos deben ser tratados de forma uniforme. Por ejemplo en los siguientes escenarios:
+		* Estructuras part-whole (sistemas que representan datos en forma de árbol o jerarquía, por ejemplo, un sistema de archivos en el que las carpetas (compuestos) pueden contener archivos o incluso otras carpetas (hojas)).
+		* Operaciones recursivas uniformes: cuando la mayoría de las operaciones que se aplican a un objeto se pueden definir de manera recursiva para que, en el caso de un compuesto, se deleguen a sus componentes. De forma que, al llamar a una única operación en el nodo raíz, se recorre toda la estructura sin necesidad de lógica especial en el cliente. 
+		* Simplicidad y extensibilidad: Cuando deseas simplificar el código del cliente eliminando comprobaciones del tipo de objeto. Utilizando una única interfaz para ambos tipos de objetos, el cliente puede trabajar con ellos sin importar su complejidad interna, facilitando la extensibilidad del sistema si en el futuro la estructura se vuelve más compleja. 
+		* Contextos comunes: Se aplica frecuentemente en sistemas de menús y submenús en interfaces de usuario, en estructuras organizacionales, en representaciones gráficas de documentos, y en modelado de hardware o dispositivos compuestos.
+
+En resumen, del patrón Composite debríoa aplicarse cuando la complejidad de la estructura te obligue a tratar de forma homogénea a componentes simples y compuestos, evitando así la proliferación de condicionales en el código del cliente.
+
+3. Dentro de las consecuencias, se indica que los clientes deben mantenerse simples y no deben ser conscientes si están interactuando con un objeto hoja o una composición. ¿Qué elementos de la programación orientada a objetos hacen posible esto?
+
+	Los elementos clave que hacen posible que el cliente trate de forma uniforme a hojas y composiciones son la herencia y el polimorfismo. La herencia, porque ambos tipos de objetos (hojas y compuestos) heredan de una clase base o implementan la misma interfaz, que define un conjunto de operaciones comunes. Esto establece un contrato uniforme para todos los objetos, lo que significa que cualquier objeto del tipo "componente" puede ser tratado de la misma manera. Así, el cliente no tiene que preocuparse por si está interactuando con una hoja o un compuesto, y el polimorfismo, porque cuando el cliente invoca un método en una referencia del tipo "componente", la llamada se resuelve en tiempo de ejecución al método correspondiente en el objeto concreto. Esto permite que cada objeto (ya sea simple o compuesto) responda de acuerdo a su propia implementación. Por ejemplo, mientras una hoja ejecuta la operación directamente, un compuesto puede delegar la misma operación a sus hijos, manteniendo la uniformidad en la interacción sin exponer detalles de su estructura interna.

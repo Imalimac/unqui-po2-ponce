@@ -1,0 +1,69 @@
+@startuml
+
+Parcela ..|> ICultivar
+
+PorcionProductivaDeTierra "1" *-- "4" RegionDeCultivo
+RegionDeCultivo "1" *-- "4" Parcela 
+
+Cultivo <|-- Soja
+Cultivo <|-- Trigo
+
+Cultivo -- Parcela
+
+
+
+interface ICultivar{
+	
+	+ cultivar(Cultivo cultivo): void.
+	+ calcularGanancia (): double.
+
+}
+
+class Parcela{
+    + cultivo: Cultivo.
+
+
+    + Parcela(Cultivo cultivo).
+    + getCultivo: Cultivo.
+   	+ cultivar(Cultivo cultivo): void.
+	+ calcularGanancia (Parcela parcela): double.
+
+}
+
+class RegionDeCultivo{
+    + parcelasDeLaRegion: ArrayList<Parcelas>.
+
+	+ RegionDeCultivo(ArrayList<Parcela> parcelasDeLaRegion).
+   	+ cultivar(Cultivo cultivo): void.
+	+ calcularGanancia (Parcela parcela): double.
+	agregarParcela(Parcela parcelaAAgregar): void.
+
+}
+
+class PorcionProductivaDeTierra{
+    + regionDeCultivo: ArrayList<RegionDeCultivo>.
+
+	+ PorcionProductivaDeTierra(RegionDeCultivo regionDeCultivo).
+   	+ cultivar(Cultivo cultivo): void.
+	+ calcularGanancia (Parcela parcela): double.
+	+ agregarParcela(RegionDeCultivo regionAAgregar): void.
+}
+
+Abstract class Cultivo {
+	
+	+ Cultivo().
+	abstract ganancia(): double.
+	
+}
+
+class Soja {
+	
+	+ Soja().
+	+ ganancia(): double.
+}
+
+class Trigo {
+	+ Soja().
+	+ ganancia(): double.
+}
+@enduml
