@@ -1,63 +1,40 @@
 @startuml
 
-Parcela ..|> ICultivar
+Parcela <|-- ParcelaSimple
+Parcela <|-- ParcelaCompuesta 
 
-PorcionProductivaDeTierra "1" *-- "4" RegionDeCultivo
-RegionDeCultivo "1" *-- "4" Parcela 
+ParcelaCompuesta *-- ParcelaSimple: "1" *-- "4": seComponeDe
+ParcelaCompuesta *-- ParcelaCompuesta: "1" *-- "4": seComponeDe 
 
 Cultivo <|-- Soja
 Cultivo <|-- Trigo
 
-Cultivo -- Parcela
+Cultivo -- Parcela: tiene
 
-
-
-interface ICultivar{
-	
-	+ cultivar(Cultivo cultivo): void.
+abstract class Parcela{
 	+ calcularGanancia (): double.
-
 }
 
-class Parcela{
+class ParcelaSimple{
     + cultivo: Cultivo.
-
 
     + Parcela(Cultivo cultivo).
     + getCultivo: Cultivo.
-   	+ cultivar(Cultivo cultivo): void.
-	+ calcularGanancia (Parcela parcela): double.
-
+	+ calcularGanancia (): double.
 }
 
-class RegionDeCultivo{
-    + parcelasDeLaRegion: ArrayList<Parcelas>.
-
-	+ RegionDeCultivo(ArrayList<Parcela> parcelasDeLaRegion).
-   	+ cultivar(Cultivo cultivo): void.
-	+ calcularGanancia (Parcela parcela): double.
-	agregarParcela(Parcela parcelaAAgregar): void.
-
-}
-
-class PorcionProductivaDeTierra{
-    + regionDeCultivo: ArrayList<RegionDeCultivo>.
-
-	+ PorcionProductivaDeTierra(RegionDeCultivo regionDeCultivo).
-   	+ cultivar(Cultivo cultivo): void.
-	+ calcularGanancia (Parcela parcela): double.
-	+ agregarParcela(RegionDeCultivo regionAAgregar): void.
-}
-
-Abstract class Cultivo {
+class ParcelaCompuesta{
+    + parcelasDeLaRegion: ArrayList<Parcela>.
 	
-	+ Cultivo().
+	+ ParcelaCompuesta(Parcela primeraParcela, Parcela segundaParcela, Parcela terceraParcela, Parcela cuartaParcela): void.
+	+ calcularGanancia (): double.
+}
+
+Abstract class Cultivo {	
 	abstract ganancia(): double.
-	
 }
 
 class Soja {
-	
 	+ Soja().
 	+ ganancia(): double.
 }
@@ -66,4 +43,5 @@ class Trigo {
 	+ Soja().
 	+ ganancia(): double.
 }
+
 @enduml

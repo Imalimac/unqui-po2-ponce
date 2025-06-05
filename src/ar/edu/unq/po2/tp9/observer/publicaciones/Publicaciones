@@ -1,0 +1,59 @@
+@startuml
+
+Notificaciones --* Investigador:"1"--*"n":  posee 
+Investigador ..|> ISuscriptor: implementa
+Investigador -- Articulo:"1"--"n": escribe
+Investigador -- Articulo:"n"--"n": consulta
+
+interface ISuscriptor {
+    update(String news): void 
+    suscribirse(Notificaciones notificador, String suscripcion): void
+}
+
+class Investigador{
+    -nombre: String 
+    -articulos: ArrayList<Articulo>
+    -suscripciones: ArrayList<String>
+    -notificaciones: ArrayList<String>
+
+    +Investigador(String nombre)
+    +getNombre(): String 
+	+actualizar(Articulo novedad): void
+	+getSuscripciones(): ArrayList<String> 
+	+getArticulos(): ArrayList<Articulo> 
+	+agregarArticulo(Articulo articuloAAgregar): void 
+    +getNotificaciones(): ArrayList<String> 
+	+suscribirse(Notificaciones notificador, String suscripcion): void 
+}
+
+class Notificaciones {
+	-suscriptores: ArrayList<Investigador> 
+	-new ArrayList<>(): ArrayList<Articulo> articulos
+
+    +agregarSuscriptor(Investigador subscriber): void
+    +agregarArticulo(Articulo articulo): void
+    +notificarSuscriptor(String criteriosDeFiltracion): void    
+    +hayNovedades(Investigador suscriptor): boolean
+    +novedades(Investigador suscriptor, Articulo articulo): String
+}
+
+Class Articulo{
+
+	+Articulo(String titulo, String autores, String filiacion, String tipoDeArtículo, String lugarDePublicacion)
+	+getTitulo():String 
+	+getAutores(): String 
+	+getFiliacion(): String 
+	+getTipoDeArtículo(): String 
+	+getLugarDePublicacion(): String 
+	+getPalabrasClave(): ArrayList<String> 
+	
+	+Articulo(String titulo, String autores, String filiacion, String tipoDeArtículo, String lugarDePublicacion)
+    +getTitulo():String
+	+getAutores():String
+	+getFiliacion():String
+	+getTipoDeArtículo():String
+	+getLugarDePublicacion():String
+	+getPalabrasClave():ArrayList<String>  
+}
+
+@enduml

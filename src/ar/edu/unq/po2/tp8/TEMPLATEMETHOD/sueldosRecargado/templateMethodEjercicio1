@@ -1,0 +1,57 @@
+Ejercicio 1 - 
+
+1.Lea el pattern Template Method utilizando las ideas propuestas por el pattern resuelva los ejercicios siguientes. Responda:
+a. ¿Dónde se define el esqueleto del algoritmo?
+	
+	El esqueleto del algoritmo se define en el método plantilla dentro de la clase base abstracta. Este método establece la secuencia de pasos que deben ejecutarse, pero delega 	algunos de ellos a métodos abstractos que serán implementados por las subclases.
+
+b. ¿Se puede redefinir el esqueleto?
+
+	En el Template Method Pattern, el esqueleto del algoritmo está definido en la clase base y normalmente no debería ser modificado por las subclases. Sin embargo, hay algunas 	formas de permitir cierta flexibilidad mediante métodos hook (ganchos opcionales), o utilizando composición en lugar de herencia (en lugar de depender exclusivamente de 	herencia, se pueden usar interfaces o clases auxiliares para modificar el comportamiento sin alterar el método plantilla).
+
+c. ¿Qué es lo que se puede redefinir?
+	
+	Se pueden redefinir los métodos de las subclases. Tambien se pueden redefinir las interfaces o clases auxiliares para modificar el comportamiento sin alterar el método 	plantilla.
+
+d. ¿Qué es un hook method?
+	
+	El Hook Method es un método dentro de la clase base que permite a las subclases modificar o extender el comportamiento del algoritmo sin alterar su estructura general. Se usa en 	el Template Method Pattern para proporcionar puntos de extensión opcionales. El Hook Method se define en la clase base con una implementación vacía o predeterminada. Las 	subclases pueden sobrescribirlo para modificar el comportamiento del algoritmo. Si no se redefine, el algoritmo sigue su flujo normal. Se usa para ajustes menores sin necesidad 	de modificar el método plantilla. 
+
+2. Busque dos ejemplos del patrón en las clases de la imagen de Smalltalk.
+
+	Ejemplo de la Cuenta.
+
+3. Para cada ejemplo, realice un diagrama de clases indicando:
+	a. La clase abstracta. 
+		--> Cuenta
+
+	b. El template method.
+		abstract Cuenta <-- CajaDeAhorro
+		abstract Cuenta <-- CuentaCorriente
+		abstract Cuenta <-- CuentaEmpresarial
+		
+		abstract Cuenta{
+			- movimientos: List<Movimiento>.
+			- saldo: float.
+			
+			- calcularComision: float.
+			- setearSaldo(): void.
+			- validar: boolean.
+			- agregarMovimiento: void.
+			- informar().
+		}
+
+	c. Al menos dos clases concretas.
+		--> CajaDeAhorro
+		--> CuentaCorriente
+		--> CuentaEmpresarial
+		
+	d. Los métodos en la clase abstracta que se redefinen en la clase concreta.
+		- calcularComision: float.
+		- setearSaldo(): void.
+		- validar: boolean.
+		- agregarMovimiento: void.
+
+	e. Indique hooks methods.
+		- informar()
+
